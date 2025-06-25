@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+body {
+  padding: 20px;
+  font-family: "Rubik";
+  color: #333;
+}
+/**header**/
+header {
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+header li {
+  float: left;
+}
+
+header li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+header li a:hover {
+  background-color: #ef4444;
+}
+
+header .active {
+  background-color: #ef4444;
+}
+/**header end**/
+.search {
+   text-align: right;
+   margin-bottom: 20px;
+}
+
+.div-align-center{
+    display: flex;
+  width: 100%;
+justify-content: center;
+}
+.div-align-center > button {
+  width: 100px;
+  margin: 20px auto;
+  display: block;
+}
+
+input,select, button{
+  padding: 10px;
+  font-family: "Rubik";
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.add-form {
+    display: flex;
+  gap: 10px;
+   margin-top: 20px;
+   margin-bottom: 20px; 
+}
+
+/* EDIT ASSET*/
+.edit-form{
+background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+}
+
+.edit-group {
+      margin-bottom: 15px;
+    }
+    .edit-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .edit-group input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .edit-group input:focus {
+      border-color: #ea3030;
+      outline: none;
+    }
+    .edit-group button {
+      width: 100%;
+      padding: 10px;
+      background-color: #EF4444;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .edit-group button:hover {
+      background-color: #ea3030;
+    }
+
+/* END EDIT ASSET*/
+
+form button {
+  margin-left: auto;
+}
+form input, select {
+  flex-grow: 1;
+  border: 1px solid #e9e9e9;
+  border-radius: 4px;
+}
+
+button {
+  background: #ef4444;
+  color: white;
+  border: 0;
+}
+
+
+table, th, td {
+  border: 1px solid;
+  text-align: left;
+}  
+
+.validaton-message{
+  font-size: 20px;
+  color: #ea3030;
+}
+
+/* .asset-list ul {
+  padding: 10px 20px;
+  list-style-type: none;
+  background: #f4f4f4;
+  border-radius: 8px;
+}
+.asset-list li {
+  border-bottom: 1px solid #e9e9e9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px  0;
+}
+.asset-list li > div {
+  margin-right: auto;
+}
+.asset-list li:last-child {
+  border: 0;
+}
+.asset-list li h3, .books li p {
+  text-align: left;
+  margin-bottom: 0px;
+  margin-top: 4px;
+}
+.asset-list li p {
+  color: #777;
+} */
