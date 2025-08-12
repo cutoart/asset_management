@@ -26,7 +26,7 @@ const createLoginForm = (errorMessage = '') => /*html*/`
    </div>
 `;
 
-const createHomepageTemplate = () => /*html*/`
+const createHomepageTemplate = (userName='') => /*html*/`
   <!DOCTYPE html>
   <html>
     <head>
@@ -38,10 +38,17 @@ const createHomepageTemplate = () => /*html*/`
       <header>
         <h1>System</h1>
      <ul>
-      <li><a hx-get="/assetHome" hx-trigger="click" hx-target=".main" >Assets</a></li>
+      <li><a hx-get="/assetHome" hx-trigger="click" hx-target=".main" >Active Assets</a></li>
   <li><a hx-get="/userHome" hx-trigger="click" hx-target=".main">Users</a></li>
-  <li><a href="#Log">Logs</a></li>
+      <li><a hx-get="/assetlogHome" hx-trigger="click" hx-target=".main">Assets Logs</a></li>
+  <li><a hx-get="/userlogHome" hx-trigger="click" hx-target=".main">Users Logs</a></li>
+  <li><a hx-get="/bunitHome" hx-trigger="click" hx-target=".main">Business Unit</a></li>
+  <li><a hx-get="/amodelHome" hx-trigger="click" hx-target=".main">Assets Model</a></li>
+    <li><a hx-get="/dassetHome" hx-trigger="click" hx-target=".main">Disposed</a></li>
+    <li><a hx-get="/faqHome" hx-trigger="click" hx-target=".main">FAQ</a></li>
+    <li><a hx-get="/inquiry" hx-trigger="click" hx-target=".main">Inquiry</a></li>
   <li style="float:right"><a hx-post="/logout" hx-trigger="click">Logout</a></li>
+  <li style="float:right"><a id="user-name">${userName}</a></li>
 </ul>
       </header>
 
@@ -52,6 +59,21 @@ const createHomepageTemplate = () => /*html*/`
       </main>
     </body>
   </html>
+
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('header li a[hx-get]');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function () {
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+</script>
+
 `;
 
 export {

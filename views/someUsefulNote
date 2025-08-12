@@ -1,0 +1,130 @@
+` 
+<br>${errorMessage ? `<p class="error" style="color:red">${errorMessage}</p>` : ''}<br>
+
+
+   <tbody class="details">
+   ${log.map((log) => `
+     <tr data-id="${log.logId}">
+      <td>${log.logBy}</td>
+      <td>${log.logObject}</td>
+      <td>${log.logEvent}</td>
+      <td>${log.createdAt}</td>
+      
+    </tr>
+  `).join('')}
+  </tbody>
+
+
+  //edit asset.js
+
+<div class="edit-group" id="signatureContainer" style="display: none;">
+  <label>Signature Confirmation</label>
+  <canvas id="signaturePad" width="300" height="150" style="border:1px solid #000; touch-action: none;"></canvas>
+  <input type="hidden" name="signatureData" id="signatureData">
+  <button type="button" onclick="clearSignature()">Clear</button>
+</div>
+
+
+<script>
+let canvas, ctx;
+let drawing = false;
+
+function handleUserChange(event) {
+  const originalUserId = "${result.userId}";
+  const selectedUserId = event.target.value;
+  const signatureContainer = document.getElementById("signatureContainer");
+
+  if (selectedUserId !== originalUserId) {
+    signatureContainer.style.display = "block";
+    initSignaturePad(); // Initialize only when needed
+  } else {
+    signatureContainer.style.display = "none";
+  }
+}
+
+function initSignaturePad() {
+  if (canvas && ctx) return; // Already initialized
+
+  canvas = document.getElementById("signaturePad");
+  ctx = canvas.getContext("2d");
+
+  // Prevent scrolling on touch devices
+  canvas.addEventListener("touchstart", e => e.preventDefault(), { passive: false });
+  canvas.addEventListener("touchmove", e => e.preventDefault(), { passive: false });
+
+  // Mouse Events
+  canvas.addEventListener("mousedown", startDrawing);
+  canvas.addEventListener("mousemove", draw);
+  canvas.addEventListener("mouseup", stopDrawing);
+  canvas.addEventListener("mouseout", stopDrawing);
+
+  // Touch Events
+  canvas.addEventListener("touchstart", startDrawing);
+  canvas.addEventListener("touchmove", draw);
+  canvas.addEventListener("touchend", stopDrawing);
+}
+
+function getPosition(e) {
+  const rect = canvas.getBoundingClientRect();
+  if (e.touches) {
+    return {
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  } else {
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
+  }
+}
+
+function startDrawing(e) {
+  drawing = true;
+  const pos = getPosition(e);
+  ctx.beginPath();
+  ctx.moveTo(pos.x, pos.y);
+  e.preventDefault();
+}
+
+function draw(e) {
+  if (!drawing) return;
+  const pos = getPosition(e);
+  ctx.lineTo(pos.x, pos.y);
+  ctx.stroke();
+  e.preventDefault();
+}
+
+function stopDrawing(e) {
+  if (!drawing) return;
+  drawing = false;
+  const dataUrl = canvas.toDataURL("image/png");
+  document.getElementById("signatureData").value = dataUrl;
+  e.preventDefault();
+}
+
+function clearSignature() {
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("signatureData").value = "";
+  }
+}
+</script>
+
+
+
+//assetAssignedTo (before canvas)
+<div class="edit-group">
+    <label for="assetAssignedTo">User Assigned</label>
+    <select 
+  name="assetAssignedTo" 
+  id="assetAssignedTo" 
+  hx-get="/user-list/${result.userId}" 
+  hx-trigger="focus delay:0.3s" 
+  hx-target="#assetAssignedTo" 
+  hx-swap="innerHTML">
+  <option value="${result.userId}">${result.userName}</option>
+</select>
+        </div>
+`
+

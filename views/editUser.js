@@ -1,4 +1,4 @@
-const editUserHomeTemplate = (result) => /*html*/`
+const editUserHomeTemplate = (result,bunits,currentUser) => /*html*/`
 <div class="div-align-center">
 <div class="edit-form">
   <h2>Edit User</h2>
@@ -11,30 +11,26 @@ const editUserHomeTemplate = (result) => /*html*/`
 
         <div class="edit-group">
          <label for="userEmail">Email</label>
-    <input type="text" name="userEmail" id="userEmail" value="${result.userEmail}" disabled>
+    <input type="text" name="userEmail" id="userEmail" value="${result.userEmail}" readonly>
         </div>
+
+        ${currentUser.userType === 'Admin' ?`<div class="edit-group">
+         <label for="userPassword">Password</label>
+    <input type="password" name="userPassword" id="userPassword" value="${result.userPassword}">
+    <button class="btnUpdatePassword" hx-put="/user/editPassword/${result.userId}" hx-target=".main" hx-trigger="click">Update Password</button>
+        </div>`:''}
 
         <div class="edit-group">
          <label for="userBu">Business Unit:</label>
-            <select 
-              id="userBu" 
-              name="userBu">
-              <option value=${result.userBu} selected>${result.userBu}</option>
-              <option value="Accounts">Accounts</option>
-          <option value="ACMV">ACMV</option>
-  <option value="AM">AM</option>
-  <option value="EMRE">EMRE</option>
-  <option value="ENGRG">ENGRG</option>
-   <option value="FA">FA</option>
-   <option value="FM">FM</option>
-    <option value="HR">HR</option>
-    <option value="IA">IA</option>
-      <option value="T&I">T&I</option>
-     <option value="LIFTS">LIFTS</option>
-     <option value="OCC">OCC</option>
-     <option value="PMS">PMS</option>
-  </select>  
+           <select name="userBu">
+  ${bunits.map(bunit => `
+        <option value="${bunit.bunitName}" ${bunit.bunitName === result.userBu ? 'selected' : ''}>
+      ${bunit.bunitName}
+    </option>
+      `).join('')}
+    </select>         
         </div>
+
         <div class="edit-group">
          <label for="userStatus">Status</label>
          <select name="userStatus" id="userStatus">

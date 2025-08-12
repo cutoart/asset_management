@@ -1,12 +1,10 @@
 const createAssetListTemplate = (assets) => /*html*/`
+<p>Total assets: ${assets.length}</p>
   <table class="table">
     <thead>
       <tr>
-        <th>Asset Tag</th>
-        <th>Type</th>
-        <th>Serial No</th>
-        <th>Model</th>
-        <th>Brand</th>
+        <th>AssetTag/Type</th>
+        <th>Model/SerialNo</th>
         <th>Status</th>
         <th>Assigned To</th>
          <th></th>
@@ -16,11 +14,8 @@ const createAssetListTemplate = (assets) => /*html*/`
     <tbody class="details">
     ${assets.map((asset) =>`
     <tr data-id="${asset.assetId}">
-  <td>${asset.assetTag}</td>
-  <td>${asset.assetType}</td>
-  <td>${asset.serialNo}</td>
-  <td>${asset.assetModel}</td>
-  <td>${asset.assetBrand}</td>
+  <td>${asset.assetTag}<br>${asset.assetType}</td>
+  <td>${asset.assetModel}<br>${asset.serialNo}</td>
   <td>${asset.assetStatus}</td>
   <td>${asset.userName}</td>
    <td><button class="editAsset" hx-get="/editAssetForm/${asset.assetId}" hx-target=".main">Edit</button></td>

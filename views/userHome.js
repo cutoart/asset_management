@@ -1,21 +1,30 @@
-const createUserHomeTemplate = () => /*html*/`
+const createUserHomeTemplate = (bunits) => /*html*/`
  <div class="search">
-<h3>
-  Search Users
-  <span class="htmx-indicator">
-    <!-- <img src="/img/bars.svg"/> -->
-     Searching...
-   </span>
-</h3> 
+<h3>Search Users<span class="htmx-indicator">Searching...</span></h3>
 <input class="form-control" type="search"
-       name="search" placeholder="Begin Typing To Search Users..."
+       name="search" placeholder="Search Users..."
        hx-post="/users/search"
        hx-trigger="input changed delay:900ms, keyup[key=='Enter']"
        hx-target=".user-list"
        hx-indicator=".htmx-indicator">
         </div> 
         <div>
-        <form
+        ${createUserFormTemplate(bunits)}
+        </div>
+        
+        <div class="div-align-center">
+        <div class="user-list" hx-trigger="load" hx-get="/users" hx-target=".user-list">
+          
+
+        </div>
+        
+        </div>
+        
+`;
+
+const createUserFormTemplate = (bunits) => /*html*/`
+
+<form
             hx-post="/users" 
             hx-target=".user-list" 
             hx-on::after-request="document.querySelector('form').reset()"
@@ -34,27 +43,24 @@ const createUserHomeTemplate = () => /*html*/`
             <input 
               id="userEmail" 
               name="userEmail"
-              placeholder="user@emservices.com.sg" 
-              type="email"
+              placeholder="username" 
+              type="text"
+              pattern="^[^@]+$"
               required
             />
+             <select 
+              id="userEmailDomain" 
+              name="userEmailDomain">
+              <option value="@emservices.com.sg">@emservices.com.sg</option>
+               <option value="@emre.com.sg">@emre.com.sg</option>
+            </select>
             <label for="userBu">Business Unit:</label>
-            <select 
-              id="userBu" 
-              name="userBu">
-              <option value="Accounts">Accounts</option>
-          <option value="ACMV">ACMV</option>
-  <option value="AM">AM</option>
-  <option value="PMS">PMS</option>
-  <option value="EMRE">EMRE</option>
-  <option value="ENGRG">ENGRG</option>
-   <option value="FA">FA</option>
-    <option value="HR">HR</option>
-    <option value="IA">IA</option>
-    <option value="T&I">T&I</option>
-     <option value="LIFTS">LIFTS</option>
-  </select>  
-                     
+
+            <select name="userBu">
+  ${bunits.map(bunit => `
+        <option value="${bunit.bunitName}">${bunit.bunitName}</option>
+      `).join('')}
+    </select>          
   <input 
               id="userStatus" 
               name="userStatus"
@@ -87,14 +93,6 @@ const createUserHomeTemplate = () => /*html*/`
             
             <button>Create</button>
           </form>
-</div>
-        <div class="div-align-center">
-        <div class="user-list" hx-trigger="load" hx-get="/users" hx-target=".user-list">
-          
 
-        </div>
-        </div>
-        
 `;
-
-export default createUserHomeTemplate;
+export  {createUserHomeTemplate,createUserFormTemplate};
